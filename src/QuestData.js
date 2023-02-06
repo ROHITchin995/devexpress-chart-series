@@ -3,7 +3,8 @@ import Chart, {
     Series,
     ZoomAndPan,
     ScrollBar,
-    ArgumentAxis
+    ArgumentAxis,
+    Label
 } from "devextreme-react/chart";
 
 
@@ -15,7 +16,7 @@ export const QuestData = () => {
     const [data, setData] = useState({});
     const [fetchLimit, setFetchLimit] = useState({
         lowerlimit: 0,
-        upperlimit: 3000
+        upperlimit: 20
     });
 
     useEffect(() => {
@@ -45,11 +46,20 @@ export const QuestData = () => {
 
 
     const visualRange = {
-        startValue: "2009-01-01T00:00:33.000000Z",
-        endValue: "2009-01-01T00:00:49.000000Z"
+        startValue: "2009-01-01T00:00:00.000000Z",
+        endValue: "2009-01-01T00:00:10.000000Z"
     };
     const handleChange = (e) => {
         console.log(e);
+        if (e.fullName === 'argumentAxis.visualRange') {
+            const currentStart = e.value.startValue;
+            const currentEnd = e.value.endValue;
+            console.log(currentStart)
+            console.log(currentEnd)
+          }
+
+
+
     };
     const wholeRange = {
         startValue: "2009-01-01T00:00:00.000000Z",
@@ -81,7 +91,9 @@ export const QuestData = () => {
         dataSource={transformedData}
         onOptionChanged={handleChange}
       >
-        <Series argumentField="pickup_datetime" valueField="trip_distance" />
+        <Series argumentField="pickup_datetime" valueField="trip_distance" >
+        <Label visible={true} /></Series>
+        
         <ArgumentAxis
           visualRangeUpdateMode="keep"
           defaultVisualRange={visualRange}
